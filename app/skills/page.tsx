@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import Button from "@/components/ui/button"
 
 type Skill = {
@@ -11,6 +11,9 @@ type Skill = {
 const skills: Skill[] = [
   { name: 'Next.js', category: 'webDev' },
   { name: 'React', category: 'webDev' },
+  { name: 'Tailwind CSS', category: 'webDev' },
+  { name: 'HTML', category: 'webDev' },
+  { name: 'CSS', category: 'webDev' },
   { name: 'TypeScript', category: 'webDev' },
   { name: 'JavaScript', category: 'webDev' },
   { name: 'Node.js', category: 'webDev' },
@@ -36,6 +39,7 @@ const categoryNames = {
 export default function SkillsPage() {
   const [isSorted, setIsSorted] = useState(false)
   const [bubbleColors, setBubbleColors] = useState<string[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!isSorted) {
@@ -52,11 +56,18 @@ export default function SkillsPage() {
   }, [isSorted])
 
   useEffect(() => {
-    if (!isSorted) {
+    if (!isSorted && containerRef.current) {
       const bubbles = document.querySelectorAll('.skill-bubble')
+      const containerRect = containerRef.current.getBoundingClientRect()
+
       bubbles.forEach((bubble) => {
-        const x = Math.random() * (window.innerWidth - 100)
-        const y = Math.random() * (window.innerHeight - 100)
+        const bubbleRect = bubble.getBoundingClientRect()
+        const maxX = containerRect.width - bubbleRect.width
+        const maxY = containerRect.height - bubbleRect.height
+
+        const x = Math.random() * maxX
+        const y = Math.random() * maxY
+
         ;(bubble as HTMLElement).style.setProperty('--x', `${x}px`)
         ;(bubble as HTMLElement).style.setProperty('--y', `${y}px`)
       })
@@ -76,8 +87,8 @@ export default function SkillsPage() {
   }, {} as Record<string, Skill[]>)
 
   return (
-    <div className="bg-[url('/skillbg.png')] bg-cover bg-no-repeat min-h-screen bg-gray-100 dark:bg-gray-900 p-8">
-      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800 ">Skills</h1>
+    <div className="bg-[url('/skillbg.png')] bg-cover bg-no-repeat min-h-screen bg-gray-100 dark:bg-gray-900 p-8 py-20">
+      <h1 className="text-4xl font-bold mb-8 text-center text-gray-800">Skills</h1>
       <div className="mb-8 text-center">
         <Button onClick={toggleSort}>
           {isSorted ? 'Randomize' : 'Sort by Category'}
@@ -104,13 +115,14 @@ export default function SkillsPage() {
           ))}
         </div>
       ) : (
-        <div className="relative h-[600px]">
+        <div ref={containerRef} className="relative h-[calc(100vh-200px)] overflow-hidden">
           {skills.map((skill, index) => (
             <div
               key={skill.name}
               className="skill-bubble absolute rounded-full p-4 shadow-lg transition-all duration-1000 ease-in-out"
               style={{
                 backgroundColor: bubbleColors[index],
+                transform: 'translate(var(--x), var(--y))',
                 animationDelay: `${index * 0.1}s`,
               }}
             >
@@ -122,3 +134,4 @@ export default function SkillsPage() {
     </div>
   )
 }
+

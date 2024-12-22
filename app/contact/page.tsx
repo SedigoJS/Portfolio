@@ -1,117 +1,145 @@
-'use client'
+"use client";
 
-import React, { useState } from 'react';
+import { useState, useEffect } from "react";
+import Image from "next/image";
 
-const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-  const [status, setStatus] = useState<{ type: string; message: string } | null>(
-    null
-  );
+export default function PortfolioContact() {
+  const [move, setMove] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setMove(true);
+    }, 200);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+    return () => clearTimeout(timer);
+  }, []);
 
-    if (!formData.name || !formData.email || !formData.message) {
-      setStatus({ type: 'error', message: 'Please fill in all fields.' });
-      return;
-    }
-
-    // Simulate a form submission
-    try {
-      // Replace with actual API call logic
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-
-      setStatus({
-        type: 'success',
-        message: 'Your message has been sent successfully!',
-      });
-      setFormData({ name: '', email: '', message: '' }); // Clear the form
-    } catch (error) {
-      setStatus({ type: 'error', message: 'Something went wrong. Please try again.' });
-      console.error(error);
-    }
-  };
+  const contactItems = [
+    {
+      href: "https://www.facebook.com/sedigo.joshua",
+      src: "/contact_logo1.png",
+      alt: "Facebook logo",
+      text: "Facebook", 
+      hoverBg: "hover:bg-[url('/fb.png')] hover:text-black",
+      hoverIcon: "hover:bg-blue-600"
+    },
+    {
+      href: "mailto:sedigojs@gmail.com",
+      src: "/contact_logo2.png",
+      alt: "Gmail logo",
+      text: "Email",
+      hoverBg: "hover:bg-[url('/gmail.png')] hover:text-black",
+      hoverIcon: "hover:bg-red-600"
+    },
+    {
+      href: "viber://chat?number=%2B639286819047",
+      src: "/contact_logo3.png",
+      alt: "Viber logo",
+      text: "Viber",
+      hoverBg: "hover:bg-[url('/viber.png')] hover:text-black",
+      hoverIcon: "hover:bg-purple-600"
+    },
+    {
+      href: "https://github.com/SedigoJS",
+      src: "/contact_logo4.png",
+      alt: "Github logo",
+      text: "GitHub",
+      hoverBg: "hover:bg-[url('/github.png')] hover:text-white",
+      hoverIcon: "hover:bg-white"
+    },
+  ];
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-gray-800 mt-10">
-      <h2 className="text-3xl font-semibold mb-6 text-center text-gray-900 dark:text-white">Contact Me</h2>
+    <footer className="bg-gradient-to-b from-gray-900 to-black text-white py-16 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-bold text-center mb-12">Get in Touch</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="w-full">
+            <div
+              className={`w-full max-w-md mx-auto space-y-4 transition-all duration-700 ease-linear ${
+                move ? "translate-x-0 opacity-100" : "-translate-x-10 opacity-0"
+              }`}
+            >
+              {contactItems.map((item, index) => (
+                <a
+                  key={index}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`group pl-5 h-16 w-full rounded-full flex items-center ${item.hoverBg} hover:bg-cover transition-all duration-300 bg-gray-800 bg-opacity-50`}
+                >
+                  <Image
+                    className="h-8 w-8 rounded-full mr-3"
+                    src={item.src}
+                    alt={item.alt}
+                    width={32}
+                    height={32}
+                  />
+                  <p className="text-sm sm:text-base group-hover:text-white transition-colors duration-300">
+                    {item.text}
+                  </p>
+                </a>
+              ))}
+            </div>
+          </div>
 
-      {status && (
-        <div
-          className={`mb-4 p-4 text-white rounded ${
-            status.type === 'success' ? 'bg-green-500' : 'bg-red-500'
-          }`}
-        >
-          {status.message}
+          <div className="w-full flex justify-center items-center mt-8 md:mt-0">
+            <div
+              className={`w-full max-w-md flex flex-col justify-center items-center transition-all duration-700 ease-linear ${
+                move ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"
+              }`}
+            >
+              <Image
+                className="w-40 h-40 sm:w-52 sm:h-52 rounded-full mb-6"
+                src="/prof.png"
+                alt="Profile picture"
+                width={208}
+                height={208}
+              />
+              <h3 className="text-2xl font-bold mb-2">Joshua Sedigo</h3>
+              <p className="text-gray-400 mb-6">Fullstack Web Developer</p>
+              <div className="flex space-x-4">
+                {contactItems.map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${item.hoverIcon} transition-all duration-300 bg-gray-800 bg-opacity-50`}
+                  >
+                    <Image
+                      src={item.src}
+                      alt={item.alt}
+                      width={24}
+                      height={24}
+                      className="rounded-full"
+                    />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label htmlFor="name" className="block text-lg font-medium text-gray-700 dark:text-gray-300">
-            Your Name
-          </label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-400"
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="email" className="block text-lg font-medium text-gray-700 dark:text-gray-300">
-            Your Email
-          </label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-400"
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="message" className="block text-lg font-medium text-gray-700 dark:text-gray-300">
-            Your Message
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            value={formData.message}
-            onChange={handleChange}
-            rows={5}
-            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-400"
-            required
-          ></textarea>
-        </div>
-
-        <div className="flex justify-center">
-          <button
-            type="submit"
-            className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-400"
+      </div>
+      <section className="text-center mt-24">
+        <p className="text-sm text-gray-400 hover:text-gray-200 transition-colors duration-300">
+          &copy; {new Date().getFullYear()}{" "}
+          <a
+            href="https://github.com/SedigoJS"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 hover:underline hover:text-blue-400 transition-colors duration-300"
           >
-            Send Message
-          </button>
-        </div>
-      </form>
-    </div>
+            Joshua Sedigo
+          </a>
+          . All rights reserved.
+        </p>
+        <p className="mt-4 text-xs text-gray-500">
+          Built with 💻 and passion. Powered by{" "}
+          <span className="text-blue-500 font-semibold">Next.js</span> and{" "}
+          <span className="text-cyan-500 font-semibold">Tailwind CSS</span>.
+        </p>
+      </section>
+    </footer>
   );
-};
-
-export default Contact;
+}

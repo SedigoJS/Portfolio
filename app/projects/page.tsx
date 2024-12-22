@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const Projects = () => {
   return (
-    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen p-8">
+    <div className="bg-gray-100 dark:bg-gray-900 min-h-screen p-8 my-20">
       {/* Projects Section */}
       <section className="mb-16">
         <h2 className="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-10">Featured Projects</h2>
@@ -23,8 +23,8 @@ const Projects = () => {
                 />
                 <div className="overlay">
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-white">Online Classroom Platform</h3>
-                    <p className="mt-2 text-white">A web application similar to Google Classroom, where teachers can manage classes, assignments, and students interactively.</p>
+                    <h3 className="text-md md:text-xl font-semibold text-white">Online Classroom Platform</h3>
+                    <p className="text-sm md:text-base mt-2 text-white">A web application similar to Google Classroom, where teachers can manage classes, assignments, and students interactively.</p>
                     <a href="https://lms-x-aai.vercel.app" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</a>
                   </div>
                 </div>
@@ -47,8 +47,8 @@ const Projects = () => {
                 />
                 <div className="overlay">
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-white">Raffle System with Admin Dashboard</h3>
-                    <p className="mt-2 text-white">A consumer raffle submission system with an admin panel for managing entries, draws, and winners.</p>
+                    <h3 className="text-md md:text-xl font-semibold text-white">Raffle System with Admin Dashboard</h3>
+                    <p className="text-sm md:text-base mt-2 text-white">A consumer raffle submission system with an admin panel for managing entries, draws, and winners.</p>
                     <a href="https://www.surfxbini.com" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</a>
                   </div>
                 </div>
@@ -64,8 +64,8 @@ const Projects = () => {
                 />
                 <div className="overlay">
                   <div className="text-center">
-                    <h3 className="text-xl font-semibold text-white">Weather & Music API App</h3>
-                    <p className="mt-2 text-white">A web app that integrates weather data and music API to provide users with weather updates along with a music track.</p>
+                    <h3 className="text-md md:text-xl font-semibold text-white">Weather & Music API App</h3>
+                    <p className="text-sm md:text-base mt-2 text-white">A web app that integrates weather data and music API to provide users with weather updates along with a music track.</p>
                     <a href="https://cloudcast-five.vercel.app" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</a>
                   </div>
                 </div>
@@ -76,10 +76,7 @@ const Projects = () => {
       </section>
 
       <section className="text-center mt-24 text-gray-600 dark:text-gray-400">
-        <p className="text-center text-lg text-gray-700 dark:text-gray-300 mt-8 mb-6">Thank you for exploring my projects. Feel free to get in touch for more details!</p>
-        <p className="text-sm">
-          &copy; {new Date().getFullYear()} <span className="text-blue-500 hover:underline dark:text-blue-400">Joshua Sedigo</span>. All rights reserved.
-        </p>
+        <p className="text-center text-lg text-gray-700 dark:text-gray-300 mt-8">Thank you for exploring my projects. Feel free to get in touch for more details!</p>
       </section>
     </div>
   );

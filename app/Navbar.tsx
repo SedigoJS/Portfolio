@@ -1,22 +1,22 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { Menu, X, Sun, Moon } from 'lucide-react'
+import { useRouter } from 'next/navigation';
 
 const navItems = [
-  { name: 'Profile', href: '/' },
-  { name: 'Skills', href: '/skills' },
-  { name: 'Projects', href: '/projects' },
-  { name: 'Background', href: '/background' },
-  { name: 'Contact', href: '/contact' },
+  { name: 'Profile', href: 'profile' },
+  { name: 'Skills', href: 'skills' },
+  { name: 'Projects', href: 'projects' },
+  { name: 'Background', href: 'background' },
+  { name: 'Contact', href: 'contact' },
 ]
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [darkMode, setDarkMode] = useState(true)
-  const pathname = usePathname()
+  const [activeSection, setActiveSection] = useState('')
+  const router = useRouter();
 
   useEffect(() => {
     if (darkMode) {
@@ -26,30 +26,63 @@ export default function Navbar() {
     }
   }, [darkMode])
 
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    }
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id)
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions)
+
+    navItems.forEach((item) => {
+      const element = document.getElementById(item.href)
+      if (element) observer.observe(element)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
   const toggleDarkMode = () => {
     setDarkMode(!darkMode)
   }
 
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId)
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' })
+    }
+    setMobileMenuOpen(false)
+  }
+
   return (
-    <nav className="dark:bg-gray-800">
+    <nav className="dark:bg-gray-800 fixed w-full z-50 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <span className="text-xl font-bold text-gray-900 dark:text-white">Joshua S.</span>
+            <span className="text-xl font-bold text-gray-900 dark:text-white cursor-pointer" onClick={() => router.push('/')}>Joshua S.</span>
           </div>
           <div className="hidden md:flex items-center justify-center flex-1 gap-2">
             {navItems.map((item) => (
-              <Link
+              <button
                 key={item.name}
-                href={item.href}
-                className={`px-3 py-2 rounded-md text-sm font-medium ${
-                  pathname === item.href
+                onClick={() => scrollToSection(item.href)}
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ease-in-out
+                  ${activeSection === item.href
                     ? 'bg-blue-900 text-white'
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                }`}
+                  }`}
               >
                 {item.name}
-              </Link>
+              </button>
             ))}
           </div>
           <div className="flex items-center">
@@ -84,18 +117,17 @@ export default function Navbar() {
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item) => (
-              <Link
+              <button
                 key={item.name}
-                href={item.href}
-                className={`block px-3 py-2 rounded-md text-base font-medium ${
-                  pathname === item.href
-                    ? 'bg-blue-500 text-white'
+                onClick={() => scrollToSection(item.href)}
+                className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ease-in-out
+                  ${activeSection === item.href
+                    ? 'bg-blue-900 text-white'
                     : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
-                } ${item.name === 'Profile' ? 'hover:bg-blue-500 hover:text-white' : ''}`}
-                onClick={() => setMobileMenuOpen(false)}
+                  }`}
               >
                 {item.name}
-              </Link>
+              </button>
             ))}
           </div>
         </div>
