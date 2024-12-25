@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 const Projects = () => {
   return (
@@ -24,8 +25,9 @@ const Projects = () => {
                 <div className="overlay">
                   <div className="text-center">
                     <h3 className="text-md md:text-xl font-semibold text-white">Online Classroom Platform</h3>
+                    <p><i>(Custom Company Solution)</i></p>
                     <p className="text-sm md:text-base mt-2 text-white">A web application similar to Google Classroom, where teachers can manage classes, assignments, and students interactively.</p>
-                    <a href="https://lms-x-aai.vercel.app" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</a>
+                    <Link href="/projects/p1" target="_blank" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</Link>
                   </div>
                 </div>
               </div>
@@ -47,9 +49,10 @@ const Projects = () => {
                 />
                 <div className="overlay">
                   <div className="text-center">
-                    <h3 className="text-md md:text-xl font-semibold text-white">Raffle System with Admin Dashboard</h3>
-                    <p className="text-sm md:text-base mt-2 text-white">A consumer raffle submission system with an admin panel for managing entries, draws, and winners.</p>
-                    <a href="https://www.surfxbini.com" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</a>
+                    <h3 className="text-md md:text-xl font-semibold text-white">Entry via Purchase Promotion</h3>
+                    <p><i>(Custom Company Solution)</i></p>
+                    <p className="text-sm md:text-base mt-2 text-white">A promotional campaign where customers can enter a contest, raffle, or sweepstakes by purchasing a designated product.</p>
+                    <Link href="/projects/p2" target="_blank" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</Link>
                   </div>
                 </div>
               </div>
@@ -65,8 +68,27 @@ const Projects = () => {
                 <div className="overlay">
                   <div className="text-center">
                     <h3 className="text-md md:text-xl font-semibold text-white">Weather & Music API App</h3>
+                    <p><i>(Personal Project)</i></p>
                     <p className="text-sm md:text-base mt-2 text-white">A web app that integrates weather data and music API to provide users with weather updates along with a music track.</p>
-                    <a href="https://cloudcast-five.vercel.app" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</a>
+                    <Link href="https://cloudcast-five.vercel.app" target="_blank" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</Link>
+                  </div>
+                </div>
+              </div>
+              {/* Project 4 */}
+              <div className="project-card">
+                <Image
+                  width={1000}
+                  height={1000}
+                  className="w-full h-80 object-cover rounded-lg shadow-lg"
+                  src="/p3-3.png"
+                  alt="Project 3"
+                />
+                <div className="overlay">
+                  <div className="text-center">
+                    <h3 className="text-md md:text-xl font-semibold text-white">Randomizer / Raffle Wheel</h3>
+                    <p><i>(Custom Company Solution)</i></p>
+                    <p className="text-sm md:text-base mt-2 text-white">A fun, interactive tool that allows users to randomly select options or winners, similar to the Google Wheel, for raffles or decision-making.</p>
+                    <Link href="/projects/p3" target="_blank" className="mt-4 inline-block text-blue-500 hover:underline dark:text-blue-400">View Project</Link>
                   </div>
                 </div>
               </div>
